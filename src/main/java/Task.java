@@ -1,15 +1,16 @@
-public class Task {
+public abstract class Task {
     protected final String name;
-    protected boolean done;
+    protected boolean done = false;
+    protected char type;
 
     Task(String name) {
+        this.type = 'T';
         this.name = name;
-        this.done = false;
     }
 
     @Override
     public String toString() {
-        return (this.done ? "[X] " : "[ ] ") + name;
+        return  (done ? "[X] " : "[ ] ") + name;
     }
 
     public void doTask() {

@@ -2,10 +2,25 @@ public class TaskList {
     private static Task[] list = new Task[100];
     private static int length = 0;
 
-    public static void addTask(String name) {
-        list[length] = new Task(name);
+    public static void addTodo(String name) {
+        Task todo = new Todo(name);;
+        list[length] = todo;
         length++;
-        System.out.println("added: " + name);
+        System.out.println(todo);
+    }
+
+    public static void addDeadline(String name, String by) {
+        Task deadline = new Deadline(name, by);
+        list[length] = deadline;
+        length++;
+        System.out.println(deadline);
+    }
+
+    public static void addEvent(String name, String to, String from) {
+        Task event = new Event(name, to, from);
+        list[length] = event;
+        length++;
+        System.out.println(event);
     }
 
     public static void listAllTasks() {
@@ -24,5 +39,9 @@ public class TaskList {
         Task task = list[ind - 1];
         task.undoTask();
         System.out.println(task);
+    }
+
+    public static Integer getLength() {
+        return length;
     }
 }
