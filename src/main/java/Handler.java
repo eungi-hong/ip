@@ -67,6 +67,15 @@ public class Handler {
                 TaskList.addEvent(name, from, to);
                 System.out.println("Now you have " + TaskList.getLength() + " tasks in the list.");
             }
+            else if (input.startsWith("delete")) {
+                Integer ind = Integer.parseInt(input.split(" ")[1]);
+                if (ind > TaskList.getLength()) {
+                    throw new IndexException();
+                }
+                System.out.println("Noted. I've removed this task:");
+                TaskList.deleteTask(ind);
+                System.out.println("Now you have " + TaskList.getLength() + " tasks in the list.");
+            }
             else {
                 throw new UnknownCommandException();
             }
