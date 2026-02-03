@@ -1,3 +1,6 @@
+import Exception.*;
+
+
 public class Handler {
     public static void handle(String input) throws BeeException {
             if (input.equals("list")) {
