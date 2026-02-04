@@ -3,20 +3,20 @@ import java.util.ArrayList;
 public class TaskList {
     private static ArrayList<Task> list = new ArrayList<>();
 
-    public static void addTodo(String name) {
-        Task todo = new Todo(name);;
+    public static void addTodo(String name, boolean isDone) {
+        Task todo = new Todo(name, isDone);;
         list.add(todo);
         System.out.println(todo);
     }
 
-    public static void addDeadline(String name, String by) {
-        Task deadline = new Deadline(name, by);
+    public static void addDeadline(String name, String by, boolean isDone) {
+        Task deadline = new Deadline(name, by, isDone);
         list.add(deadline);
         System.out.println(deadline);
     }
 
-    public static void addEvent(String name, String to, String from) {
-        Task event = new Event(name, to, from);
+    public static void addEvent(String name, String to, String from, boolean isDone) {
+        Task event = new Event(name, to, from, isDone);
         list.add(event);
         System.out.println(event);
     }

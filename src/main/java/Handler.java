@@ -31,7 +31,7 @@ public class Handler {
                     throw new EmptyTaskException();
                 }
                 System.out.println("Got it. I've added this task:");
-                TaskList.addTodo(taskInfo[1]);
+                TaskList.addTodo(taskInfo[1], false);
                 System.out.println("Now you have " + TaskList.getLength() + " tasks in the list.");
             }
             else if (input.startsWith("deadline")) {
@@ -44,7 +44,7 @@ public class Handler {
                     throw new NoDeadlineException();
                 }
                 System.out.println("Got it. I've added this task:");
-                TaskList.addDeadline(taskInfo[0], taskInfo[1]);
+                TaskList.addDeadline(taskInfo[0], taskInfo[1], false);
                 System.out.println("Now you have " + TaskList.getLength() + " tasks in the list.");
             }
             else if (input.startsWith("event")) {
@@ -67,7 +67,7 @@ public class Handler {
                 String to = timeInfo[1];
 
                 System.out.println("Got it. I've added this task:");
-                TaskList.addEvent(name, from, to);
+                TaskList.addEvent(name, from, to, false);
                 System.out.println("Now you have " + TaskList.getLength() + " tasks in the list.");
             }
             else if (input.startsWith("delete")) {
