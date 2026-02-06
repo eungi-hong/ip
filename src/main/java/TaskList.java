@@ -10,7 +10,7 @@ public class TaskList {
     private static void updateFile() {
         StringBuilder tasks = new StringBuilder();
         for (int i = 0; i < list.size(); i++) {
-            tasks.append("/n" + list.get(i).toStore());
+            tasks.append(list.get(i).toStore() + "\n");
         }
         try {
             FileWriter fw = new FileWriter("src/main/java/data/tasks.txt");
