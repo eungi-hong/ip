@@ -1,10 +1,13 @@
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 import Exception.BeeException;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.time.format.DateTimeParseException;
 
 public class Bee {
-    private static void readTasks(String filePath) throws FileNotFoundException, IndexOutOfBoundsException {
+    private static void readTasks(String filePath) throws FileNotFoundException, IndexOutOfBoundsException, DateTimeParseException  {
         File f = new File(filePath);
         Scanner s = new Scanner(f);
 
@@ -27,7 +30,7 @@ public class Bee {
             readTasks("src/main/java/data/tasks.txt");
         } catch (FileNotFoundException err) {
             System.out.println("Missing data file!");
-        } catch (IndexOutOfBoundsException err) {
+        } catch (IndexOutOfBoundsException | DateTimeParseException err) {
             System.out.println("Corrupted data file!");
         }
         Scanner sc = new Scanner(System.in);

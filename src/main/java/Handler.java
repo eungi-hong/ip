@@ -1,5 +1,5 @@
 import Exception.*;
-
+import java.time.format.DateTimeParseException;
 
 public class Handler {
     public static void handle(String input) throws BeeException {
@@ -30,8 +30,9 @@ public class Handler {
                 if (taskInfo.length == 1) {
                     throw new EmptyTaskException();
                 }
-                System.out.println("Got it. I've added this task:");
                 TaskList.addTodo(taskInfo[1], false);
+                System.out.println("Got it. I've added this task:");
+                TaskList.printLastTask();
                 System.out.println("Now you have " + TaskList.getLength() + " tasks in the list.");
             }
             else if (input.startsWith("deadline")) {
@@ -43,9 +44,14 @@ public class Handler {
                 if (taskInfo.length == 1) {
                     throw new NoDeadlineException();
                 }
-                System.out.println("Got it. I've added this task:");
-                TaskList.addDeadline(taskInfo[0], taskInfo[1], false);
-                System.out.println("Now you have " + TaskList.getLength() + " tasks in the list.");
+                try {
+                    TaskList.addDeadline(taskInfo[0], taskInfo[1], false);
+                    System.out.println("Got it. I've added this task:");
+                    TaskList.printLastTask();
+                    System.out.println("Now you have " + TaskList.getLength() + " tasks in the list.");
+                } catch (DateTimeParseException err) {
+                    System.out.println("Please enter a valid date and time!");
+                }
             }
             else if (input.startsWith("event")) {
                 String[] taskInfo = input.split("\s+", 2);
@@ -65,10 +71,14 @@ public class Handler {
                 }
                 String from = timeInfo[0];
                 String to = timeInfo[1];
-
-                System.out.println("Got it. I've added this task:");
-                TaskList.addEvent(name, from, to, false);
-                System.out.println("Now you have " + TaskList.getLength() + " tasks in the list.");
+                try {
+                    TaskList.addEvent(name, from, to, false);
+                    System.out.println("Got it. I've added this task:");
+                    TaskList.printLastTask();
+                    System.out.println("Now you have " + TaskList.getLength() + " tasks in the list.");
+                } catch (DateTimeParseException err) {
+                    System.out.println("Please enter a valid date and time!");
+                }
             }
             else if (input.startsWith("delete")) {
                 Integer ind = Integer.parseInt(input.split(" ")[1]);

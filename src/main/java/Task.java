@@ -1,10 +1,6 @@
 public abstract class Task {
     protected final String name;
-    protected boolean isDone = false;
-
-    Task(String name) {
-        this.name = name;
-    }
+    protected boolean isDone;
 
     Task(String name, boolean isDone) {
         this.name = name;
@@ -14,6 +10,10 @@ public abstract class Task {
     @Override
     public String toString() {
         return  (isDone ? "[X] " : "[ ] ") + name;
+    }
+
+    public String toStore() {
+        return (isDone ? 1 : 0) + " / " + name;
     }
 
     public void doTask() {
