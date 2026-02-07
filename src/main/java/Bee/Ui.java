@@ -1,3 +1,5 @@
+package Bee;
+
 import java.util.Scanner;
 
 public class Ui {

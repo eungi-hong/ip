@@ -1,4 +1,6 @@
-import Exception.*;
+package Bee;
+
+import Bee.Exception.*;
 import java.io.IOException;
 
 

@@ -1,4 +1,4 @@
-package Exception;
+package Bee.Exception;
 
 public class BeeException extends Exception {
     public BeeException(String message) {

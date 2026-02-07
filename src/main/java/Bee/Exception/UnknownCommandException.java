@@ -1,4 +1,4 @@
-package Exception;
+package Bee.Exception;
 
 public class UnknownCommandException extends BeeException {
     public UnknownCommandException() {

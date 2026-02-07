@@ -1,4 +1,6 @@
-import Exception.BeeException;
+package Bee;
+
+import Bee.Exception.BeeException;
 import java.io.FileNotFoundException;
 import java.time.format.DateTimeParseException;
 
@@ -19,7 +21,7 @@ public class Bee {
     }
 
     public static void main(String[] args) {
-        new Bee("src/main/java/data/tasks.txt").run();
+        new Bee("src/main/java/Bee/data/tasks.txt").run();
     }
 
     public void run() {

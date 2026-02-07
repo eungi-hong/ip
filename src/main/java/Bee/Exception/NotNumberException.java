@@ -1,4 +1,4 @@
-package Exception;
+package Bee.Exception;
 
 public class NotNumberException extends BeeException {
     public NotNumberException() {

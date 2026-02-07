@@ -1,4 +1,4 @@
-package Exception;
+package Bee.Exception;
 
 public class NoTimeFrameException extends BeeException {
     public NoTimeFrameException() {
