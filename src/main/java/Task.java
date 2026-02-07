@@ -17,10 +17,8 @@ public abstract class Task {
     }
 
     public void doTask() {
-        this.isDone = true;
+        isDone = true;
     }
 
-    public void undoTask() {
-        this.isDone = false;
-    }
+    public void undoTask() { isDone = false; }
 }

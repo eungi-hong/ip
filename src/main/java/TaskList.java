@@ -27,7 +27,7 @@ public class TaskList {
     public String toString() {
         StringBuilder str = new StringBuilder("");
         for (int i = 0; i < list.size(); i++) {
-            str.append(list.get(i).toString());
+            str.append(i + 1 + ". " + list.get(i).toString() + "\n");
         }
         return str.toString();
     }
@@ -42,8 +42,7 @@ public class TaskList {
     }
 
     public void undoTask(Integer ind) {
-        Task task = list.get(ind - 1);
-        task.undoTask();
+        list.get(ind - 1).undoTask();
     }
 
     public void deleteTask(Integer ind) {

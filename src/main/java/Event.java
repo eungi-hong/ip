@@ -1,11 +1,11 @@
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Event extends Task {
-    protected LocalDateTime from;
-    protected LocalDateTime to;
+    protected LocalDate from;
+    protected LocalDate to;
 
-    public Event(String name, LocalDateTime from, LocalDateTime to, boolean isDone) {
+    public Event(String name, LocalDate from, LocalDate to, boolean isDone) {
         super(name, isDone);
         this.from = from;
         this.to = to;

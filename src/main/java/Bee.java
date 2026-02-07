@@ -13,7 +13,7 @@ public class Bee {
         try {
             tasks = storage.load();
         } catch (FileNotFoundException | IndexOutOfBoundsException | DateTimeParseException e) {
-            ui.output("task file corrupted!");
+            ui.output(e.getMessage());
             tasks = new TaskList();
         }
     }

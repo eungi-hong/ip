@@ -1,10 +1,10 @@
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import Exception.*;
 
 public class Parser {
-    public static LocalDateTime validateDateTime(String input) throws DateTimeParseException {
-        return LocalDateTime.parse(input);
+    public static LocalDate validateDate(String input) throws DateTimeParseException {
+        return LocalDate.parse(input);
     }
 
     public static Integer validateIntInRange(String input, int min, int max) throws NotNumberException, IndexException {
@@ -39,8 +39,8 @@ public class Parser {
             throw new NoDeadlineException();
         }
         try {
-            LocalDateTime dateTime = validateDateTime(taskInfo[1]);
-            return new Deadline(taskInfo[0], dateTime, false);
+            LocalDate date = validateDate(taskInfo[1]);
+            return new Deadline(taskInfo[0], date, false);
         } catch (DateTimeParseException err) {
             throw new NotDateTimeException();
         }
@@ -61,8 +61,8 @@ public class Parser {
             throw new NoTimeFrameException();
         }
         try {
-            LocalDateTime from = validateDateTime(taskInfo[0]);
-            LocalDateTime to = validateDateTime(taskInfo[1]);
+            LocalDate from = validateDate(taskInfo[0]);
+            LocalDate to = validateDate(taskInfo[1]);
             return new Event(name, from, to, false);
         } catch (DateTimeParseException err) {
             throw new NotDateTimeException();
