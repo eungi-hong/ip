@@ -4,7 +4,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
-import Exception.CorruptedFileException;
 
 public class Storage {
     String filePath;
