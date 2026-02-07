@@ -1,96 +1,86 @@
 import Exception.*;
-import java.time.format.DateTimeParseException;
+import java.io.IOException;
+
 
 public class Handler {
-    public static void handle(String input) throws BeeException {
-            if (input.equals("list")) {
-                System.out.println("Here are the tasks in your list:");
-                TaskList.listAllTasks();
+    public static void handle(String input, Ui ui, Storage storage, TaskList tasks) throws BeeException {
+        if (input.equals("list")) {
+            ui.output("Here are the tasks in your list:");
+            ui.output(tasks.toString());
+        }
+        else if (input.startsWith("mark")) {
+            try {
+                Integer ind = Parser.validateIntInRange(input.split(" ")[1], 1, tasks.getLength());
+                tasks.doTask(ind);
+                storage.updateFile(tasks);
+                ui.output("Nice! I've marked this task as done:");
+                ui.output(tasks.getTask(ind).toString());
+            } catch (NotNumberException | IndexException | IOException err) {
+                ui.output(err.toString());
             }
-            else if (input.startsWith("mark")) {
-                Integer ind = Integer.parseInt(input.split(" ")[1]);
-                if (ind > TaskList.getLength()) {
-                    throw new IndexException();
-                }
-                System.out.println("Nice! I've marked this task as done:");
-                TaskList.doTask(ind);
+        }
+        else if (input.startsWith("unmark")) {
+            try {
+                Integer ind = Parser.validateIntInRange(input.split(" ")[1], 1, tasks.getLength());
+                tasks.undoTask(ind);
+                storage.updateFile(tasks);
+                ui.output("Nice! I've marked this task as done:");
+                ui.output(tasks.getTask(ind).toString());
+            } catch (NotNumberException | IndexException | IOException err) {
+                ui.output(err.toString());
             }
-            else if (input.startsWith("unmark")) {
-                Integer ind = Integer.parseInt(input.split(" ")[1]);
-                if (ind > TaskList.getLength()) {
-                    throw new IndexException();
-                }
-                System.out.println("OK, I've marked this task as not done yet:");
-                TaskList.undoTask(ind);
+        }
+        else if (input.startsWith("todo")) {
+            try {
+                Todo t = Parser.validateTodo(input);
+                tasks.addTodo(t);
+                storage.updateFile(tasks);
+                ui.output("Got it. I've added this task:");
+                ui.output(tasks.lastTask().toString());
+                ui.output("Now you have " + tasks.getLength() + " tasks in the list.");
+            } catch (EmptyTaskException | IOException err) {
+                ui.output(err.toString());
             }
-
-            // add tasks
-            else if (input.startsWith("todo")) {
-                String[] taskInfo = input.split("\s+", 2);
-                if (taskInfo.length == 1) {
-                    throw new EmptyTaskException();
-                }
-                TaskList.addTodo(taskInfo[1], false);
-                System.out.println("Got it. I've added this task:");
-                TaskList.printLastTask();
-                System.out.println("Now you have " + TaskList.getLength() + " tasks in the list.");
+        }
+        else if (input.startsWith("deadline")) {
+            try {
+                Deadline d = Parser.validateDeadline(input);
+                tasks.addDeadline(d);
+                storage.updateFile(tasks);
+                ui.output("Got it. I've added this task:");
+                ui.output(tasks.lastTask().toString());
+                ui.output("Now you have " + tasks.getLength() + " tasks in the list.");
+            } catch (EmptyTaskException | IOException err) {
+                ui.output(err.toString());
             }
-            else if (input.startsWith("deadline")) {
-                String[] taskInfo = input.split("\s+", 2);
-                if (taskInfo.length == 1) {
-                    throw new EmptyTaskException();
-                }
-                taskInfo = taskInfo[1].split(" /by ");
-                if (taskInfo.length == 1) {
-                    throw new NoDeadlineException();
-                }
-                try {
-                    TaskList.addDeadline(taskInfo[0], taskInfo[1], false);
-                    System.out.println("Got it. I've added this task:");
-                    TaskList.printLastTask();
-                    System.out.println("Now you have " + TaskList.getLength() + " tasks in the list.");
-                } catch (DateTimeParseException err) {
-                    System.out.println("Please enter a valid date and time!");
-                }
+        }
+        else if (input.startsWith("event")) {
+            try {
+                Event e = Parser.validateEvent(input);
+                tasks.addEvent(e);
+                storage.updateFile(tasks);
+                ui.output("Got it. I've added this task:");
+                ui.output(tasks.lastTask().toString());
+                ui.output("Now you have " + tasks.getLength() + " tasks in the list.");
+            } catch (EmptyTaskException | IOException err) {
+                ui.output(err.toString());
             }
-            else if (input.startsWith("event")) {
-                String[] taskInfo = input.split("\s+", 2);
-                if (taskInfo.length == 1) {
-                    throw new EmptyTaskException();
-                }
-                taskInfo = taskInfo[1].split(" /from ");
-                if (taskInfo.length == 1) {
-                    throw new NoTimeFrameException();
-                }
-                String name = taskInfo[0];
-                String timeframe = taskInfo[1];
-
-                String[] timeInfo = timeframe.split(" /to ");
-                if (timeInfo.length == 1) {
-                    throw new NoTimeFrameException();
-                }
-                String from = timeInfo[0];
-                String to = timeInfo[1];
-                try {
-                    TaskList.addEvent(name, from, to, false);
-                    System.out.println("Got it. I've added this task:");
-                    TaskList.printLastTask();
-                    System.out.println("Now you have " + TaskList.getLength() + " tasks in the list.");
-                } catch (DateTimeParseException err) {
-                    System.out.println("Please enter a valid date and time!");
-                }
+        }
+        else if (input.startsWith("delete")) {
+            try {
+                Integer ind = Parser.validateIntInRange(input.split(" ")[1], 1, tasks.getLength());
+                Task task = tasks.getTask(ind);
+                tasks.deleteTask(ind);
+                storage.updateFile(tasks);
+                ui.output("Noted. I've removed this task:");
+                ui.output(task.toString());
+                ui.output("Now you have " + tasks.getLength() + " tasks in the list.");
+            } catch (NotNumberException | IndexException | IOException err) {
+                ui.output(err.toString());
             }
-            else if (input.startsWith("delete")) {
-                Integer ind = Integer.parseInt(input.split(" ")[1]);
-                if (ind > TaskList.getLength()) {
-                    throw new IndexException();
-                }
-                System.out.println("Noted. I've removed this task:");
-                TaskList.deleteTask(ind);
-                System.out.println("Now you have " + TaskList.getLength() + " tasks in the list.");
-            }
-            else {
-                throw new UnknownCommandException();
-            }
+        }
+        else {
+            throw new UnknownCommandException();
+        }
     }
 }

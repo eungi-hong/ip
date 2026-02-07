@@ -1,0 +1,71 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
+import Exception.*;
+
+public class Parser {
+    public static LocalDateTime validateDateTime(String input) throws DateTimeParseException {
+        return LocalDateTime.parse(input);
+    }
+
+    public static Integer validateIntInRange(String input, int min, int max) throws NotNumberException, IndexException {
+        try {
+            int i = Integer.parseInt(input);
+            if (i < min || i > max) {
+                throw new IndexException();
+            } else {
+                return i;
+            }
+        } catch (NumberFormatException err) {
+            throw new NotNumberException();
+        }
+    }
+
+    public static Todo validateTodo(String input) throws EmptyTaskException {
+        String[] taskInfo = input.split("\s+", 2);
+        if (taskInfo.length == 1) {
+            throw new EmptyTaskException();
+        } else {
+            return new Todo(taskInfo[1], false);
+        }
+    }
+
+    public static Deadline validateDeadline(String input) throws EmptyTaskException, NoDeadlineException, NotDateTimeException {
+        String[] taskInfo = input.split("\s+", 2);
+        if (taskInfo.length == 1) {
+            throw new EmptyTaskException();
+        }
+        taskInfo = taskInfo[1].split(" /by ", 2);
+        if (taskInfo.length == 1) {
+            throw new NoDeadlineException();
+        }
+        try {
+            LocalDateTime dateTime = validateDateTime(taskInfo[1]);
+            return new Deadline(taskInfo[0], dateTime, false);
+        } catch (DateTimeParseException err) {
+            throw new NotDateTimeException();
+        }
+    }
+
+    public static Event validateEvent(String input) throws EmptyTaskException, NoTimeFrameException, NotDateTimeException {
+        String[] taskInfo = input.split("\s+", 2);
+        if (taskInfo.length == 1) {
+            throw new EmptyTaskException();
+        }
+        taskInfo = taskInfo[1].split(" /from ", 2);
+        String name = taskInfo[0];
+        if (taskInfo.length == 1) {
+            throw new NoTimeFrameException();
+        }
+        taskInfo = taskInfo[1].split(" /to ", 2);
+        if (taskInfo.length == 1) {
+            throw new NoTimeFrameException();
+        }
+        try {
+            LocalDateTime from = validateDateTime(taskInfo[0]);
+            LocalDateTime to = validateDateTime(taskInfo[1]);
+            return new Event(name, from, to, false);
+        } catch (DateTimeParseException err) {
+            throw new NotDateTimeException();
+        }
+    }
+}

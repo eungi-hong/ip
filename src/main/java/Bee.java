@@ -1,57 +1,44 @@
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Scanner;
 import Exception.BeeException;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.time.format.DateTimeParseException;
 
 public class Bee {
-    private static void readTasks(String filePath) throws FileNotFoundException, IndexOutOfBoundsException, DateTimeParseException  {
-        File f = new File(filePath);
-        Scanner s = new Scanner(f);
+    private Storage storage;
+    private Ui ui;
+    private TaskList tasks;
 
-        while (s.hasNext()) {
-            String[] input = s.nextLine().split(" / ");
-            if (input[0].equals("T")) {
-                TaskList.addTodo(input[2], input[1].equals("1") ? true : false);
-            }
-            if (input[0].equals("D")) {
-                TaskList.addDeadline(input[2], input[3], input[1].equals("1") ? true : false);
-            }
-            if (input[0].equals("E")) {
-                TaskList.addEvent(input[2], input[3], input[4], input[1].equals("1") ? true : false);
-            }
+    public Bee(String filePath) {
+        ui = new Ui();
+        storage = new Storage(filePath);
+        try {
+            tasks = storage.load();
+        } catch (FileNotFoundException | IndexOutOfBoundsException | DateTimeParseException e) {
+            ui.output("task file corrupted!");
+            tasks = new TaskList();
         }
     }
 
     public static void main(String[] args) {
-        try {
-            readTasks("src/main/java/data/tasks.txt");
-        } catch (FileNotFoundException err) {
-            System.out.println("Missing data file!");
-        } catch (IndexOutOfBoundsException | DateTimeParseException err) {
-            System.out.println("Corrupted data file!");
-        }
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Hello! I'm Bee");
-        System.out.println("What can I do for you?");
-        String input = sc.nextLine().toLowerCase();
+        new Bee("src/main/java/data/tasks.txt").run();
+    }
+
+    public void run() {
+        ui.output("Hello! I'm Bee");
+        ui.output("What can I do for you?");
+        String input = ui.nextLine();
 
         while (true) {
-            if (input.isEmpty()) {
-            }
-            else if (input.equals("bye")) {
+            if (input.equals("bye")) {
                 System.out.println("Bye. Hope to see you again soon!");
                 return;
             } else {
                 try {
-                    Handler.handle(input);
+                    Handler.handle(input, ui, storage, tasks);
                 } catch (BeeException e) {
                     System.out.println(e.getMessage());
                 }
             }
-            input = sc.nextLine().toLowerCase();
+            input = ui.nextLine();
         }
     }
 }
