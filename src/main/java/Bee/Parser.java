@@ -6,6 +6,14 @@ import java.time.format.DateTimeParseException;
 import Bee.Exception.*;
 
 public class Parser {
+
+    public static String validateNonEmpty(String input) throws UnknownCommandException {
+        try {
+            return input.split(" ")[1];
+        } catch (Exception e) {
+            throw new UnknownCommandException();
+        }
+    }
     /**
      * Parses string to date.
      * @param input

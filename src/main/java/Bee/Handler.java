@@ -88,6 +88,9 @@ public class Handler {
             } catch (NotNumberException | IndexException | IOException err) {
                 ui.output(err.toString());
             }
+        } else if (input.startsWith("find")) {
+            String word = Parser.validateNonEmpty(input);
+            ui.output(tasks.toStringConditional(word));
         }
         else {
             throw new UnknownCommandException();

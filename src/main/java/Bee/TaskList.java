@@ -30,6 +30,16 @@ public class TaskList {
         return str.toString();
     }
 
+    public String toStringConditional(String word) {
+        StringBuilder str = new StringBuilder("");
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).name.contains(word)) {
+                str.append(i + 1 + ". " + list.get(i).toString() + "\n");
+            }
+        }
+        return str.toString();
+    }
+
     public Task lastTask() {
         return list.get(list.size() - 1);
     }
@@ -63,4 +73,5 @@ public class TaskList {
     public Task getTask(Integer ind) {
         return list.get(ind - 1);
     }
+
 }

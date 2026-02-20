@@ -23,4 +23,8 @@ public abstract class Task {
     }
 
     public void undoTask() { isDone = false; }
+
+    public boolean containsWord(String word) {
+        return name.contains(word);
+    }
 }
