@@ -11,7 +11,7 @@ public abstract class Task {
 
     @Override
     public String toString() {
-        return  (isDone ? "[X] " : "[ ] ") + name;
+        return (isDone ? "[X] " : "[ ] ") + name;
     }
 
     public String toStore() {
