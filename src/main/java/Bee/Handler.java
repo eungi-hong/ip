@@ -5,6 +5,14 @@ import java.io.IOException;
 
 
 public class Handler {
+    /**
+     * Outputs appropriate response to user input.
+     * @param input
+     * @param ui
+     * @param storage
+     * @param tasks
+     * @throws BeeException
+     */
     public static void handle(String input, Ui ui, Storage storage, TaskList tasks) throws BeeException {
         if (input.equals("list")) {
             ui.output("Here are the tasks in your list:");

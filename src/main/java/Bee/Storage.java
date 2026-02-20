@@ -14,6 +14,13 @@ public class Storage {
         this.filePath = filePath;
     }
 
+    /**
+     *
+     * @return tasklist loaded with descriptions in hard disk.
+     * @throws FileNotFoundException
+     * @throws IndexOutOfBoundsException
+     * @throws DateTimeParseException
+     */
     public TaskList load() throws FileNotFoundException, IndexOutOfBoundsException, DateTimeParseException {
         TaskList list = new TaskList();
         File f = new File(filePath);
@@ -37,6 +44,11 @@ public class Storage {
         return list;
     }
 
+    /**
+     * updates hard disk upon changes to task list
+     * @param list
+     * @throws IOException
+     */
     public void updateFile(TaskList list) throws IOException {
         FileWriter fw = new FileWriter(filePath);
         fw.write(list.toStore());

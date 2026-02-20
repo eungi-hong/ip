@@ -9,6 +9,10 @@ public class Bee {
     private Ui ui;
     private TaskList tasks;
 
+    /**
+     * Initializes Bee object with default UI, storage classes, and task list loaded from storage.
+     * @param filePath
+     */
     public Bee(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -20,10 +24,18 @@ public class Bee {
         }
     }
 
+    /**
+     * Entry point
+     * @param args
+     */
     public static void main(String[] args) {
         new Bee("src/main/java/Bee/data/tasks.txt").run();
     }
 
+    /**
+     * Runs chatbot Bee
+     * This method repeatedly reads input with UI, and leverages handler class to handle most queries
+     */
     public void run() {
         ui.output("Hello! I'm Bee");
         ui.output("What can I do for you?");

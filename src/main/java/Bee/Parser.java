@@ -6,9 +6,25 @@ import java.time.format.DateTimeParseException;
 import Bee.Exception.*;
 
 public class Parser {
+    /**
+     * Parses string to date.
+     * @param input
+     * @return the date in date type if valid
+     * @throws DateTimeParseException
+     */
     public static LocalDate validateDate(String input) throws DateTimeParseException {
         return LocalDate.parse(input);
     }
+
+    /**
+     *
+     * @param input
+     * @param min
+     * @param max
+     * @return the number in integer type if within the min-max range (inclusive)
+     * @throws NotNumberException
+     * @throws IndexException
+     */
 
     public static Integer validateIntInRange(String input, int min, int max) throws NotNumberException, IndexException {
         try {
@@ -23,6 +39,12 @@ public class Parser {
         }
     }
 
+    /**
+     *
+     * @param input
+     * @return todo task if input string is valid i.e. nonempty
+     * @throws EmptyTaskException
+     */
     public static Todo validateTodo(String input) throws EmptyTaskException {
         String[] taskInfo = input.split("\s+", 2);
         if (taskInfo.length == 1) {
@@ -32,6 +54,14 @@ public class Parser {
         }
     }
 
+    /**
+     *
+     * @param input
+     * @return task with deadline if input string is valid i.e.task name, followed by valid date
+     * @throws EmptyTaskException
+     * @throws NoDeadlineException
+     * @throws NotDateTimeException
+     */
     public static Deadline validateDeadline(String input) throws EmptyTaskException, NoDeadlineException, NotDateTimeException {
         String[] taskInfo = input.split("\s+", 2);
         if (taskInfo.length == 1) {
@@ -49,6 +79,14 @@ public class Parser {
         }
     }
 
+    /**
+     *
+     * @param input
+     * @return event if input string is valid i.e. of the form: {name} /from {start date} /to {end date}
+     * @throws EmptyTaskException
+     * @throws NoTimeFrameException
+     * @throws NotDateTimeException
+     */
     public static Event validateEvent(String input) throws EmptyTaskException, NoTimeFrameException, NotDateTimeException {
         String[] taskInfo = input.split("\s+", 2);
         if (taskInfo.length == 1) {
