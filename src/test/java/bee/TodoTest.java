@@ -1,4 +1,4 @@
-package Bee;  // same package as the class being tested
+package bee;  // same package as the class being tested
 
 import org.junit.jupiter.api.Test;
 

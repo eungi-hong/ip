@@ -1,4 +1,4 @@
-package Bee.Exception;
+package bee.Exception;
 
 public class IndexException extends BeeException {
     public IndexException() {

@@ -1,9 +1,9 @@
-package Bee;
+package bee;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
-import Bee.Exception.*;
+import bee.Exception.*;
 
 public class Parser {
 

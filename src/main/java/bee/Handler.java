@@ -1,6 +1,6 @@
-package Bee;
+package bee;
 
-import Bee.Exception.*;
+import bee.Exception.*;
 import java.io.IOException;
 
 
@@ -13,20 +13,22 @@ public class Handler {
      * @param tasks
      * @throws BeeException
      */
-    public static void handle(String input, Ui ui, Storage storage, TaskList tasks) throws BeeException {
+    public static String handle(String input, Ui ui, Storage storage, TaskList tasks) throws BeeException {
+        StringBuilder response = new StringBuilder();
+
         if (input.equals("list")) {
-            ui.output("Here are the tasks in your list:");
-            ui.output(tasks.toString());
+            response.append("Here are the tasks in your list:\n");
+            response.append(tasks.toString());
         }
         else if (input.startsWith("mark")) {
             try {
                 Integer ind = Parser.validateIntInRange(input.split(" ")[1], 1, tasks.getLength());
                 tasks.doTask(ind);
                 storage.updateFile(tasks);
-                ui.output("Nice! I've marked this task as done:");
-                ui.output(tasks.getTask(ind).toString());
+                response.append("Nice! I've marked this task as done:\n");
+                response.append(tasks.getTask(ind).toString());
             } catch (NotNumberException | IndexException | IOException err) {
-                ui.output(err.toString());
+                response.append(err.toString());
             }
         }
         else if (input.startsWith("unmark")) {
@@ -34,10 +36,10 @@ public class Handler {
                 Integer ind = Parser.validateIntInRange(input.split(" ")[1], 1, tasks.getLength());
                 tasks.undoTask(ind);
                 storage.updateFile(tasks);
-                ui.output("Nice! I've marked this task as done:");
-                ui.output(tasks.getTask(ind).toString());
+                response.append("Nice! I've marked this task as done:\n");
+                response.append(tasks.getTask(ind).toString());
             } catch (NotNumberException | IndexException | IOException err) {
-                ui.output(err.toString());
+                response.append(err.toString());
             }
         }
         else if (input.startsWith("todo")) {
@@ -45,11 +47,11 @@ public class Handler {
                 Todo t = Parser.validateTodo(input);
                 tasks.addTodo(t);
                 storage.updateFile(tasks);
-                ui.output("Got it. I've added this task:");
-                ui.output(tasks.lastTask().toString());
-                ui.output("Now you have " + tasks.getLength() + " tasks in the list.");
+                response.append("Got it. I've added this task:\n");
+                response.append(tasks.lastTask().toString());
+                response.append("\nNow you have " + tasks.getLength() + " tasks in the list.");
             } catch (EmptyTaskException | IOException err) {
-                ui.output(err.toString());
+                response.append(err.toString());
             }
         }
         else if (input.startsWith("deadline")) {
@@ -57,11 +59,11 @@ public class Handler {
                 Deadline d = Parser.validateDeadline(input);
                 tasks.addDeadline(d);
                 storage.updateFile(tasks);
-                ui.output("Got it. I've added this task:");
-                ui.output(tasks.lastTask().toString());
-                ui.output("Now you have " + tasks.getLength() + " tasks in the list.");
+                response.append("Got it. I've added this task:\n");
+                response.append(tasks.lastTask().toString());
+                response.append("\nNow you have " + tasks.getLength() + " tasks in the list.");
             } catch (EmptyTaskException | IOException err) {
-                ui.output(err.toString());
+                response.append(err.toString());
             }
         }
         else if (input.startsWith("event")) {
@@ -69,11 +71,11 @@ public class Handler {
                 Event e = Parser.validateEvent(input);
                 tasks.addEvent(e);
                 storage.updateFile(tasks);
-                ui.output("Got it. I've added this task:");
-                ui.output(tasks.lastTask().toString());
-                ui.output("Now you have " + tasks.getLength() + " tasks in the list.");
+                response.append("Got it. I've added this task:\n");
+                response.append(tasks.lastTask().toString());
+                response.append("\nNow you have " + tasks.getLength() + " tasks in the list.");
             } catch (EmptyTaskException | IOException err) {
-                ui.output(err.toString());
+                response.append(err.toString());
             }
         }
         else if (input.startsWith("delete")) {
@@ -82,18 +84,19 @@ public class Handler {
                 Task task = tasks.getTask(ind);
                 tasks.deleteTask(ind);
                 storage.updateFile(tasks);
-                ui.output("Noted. I've removed this task:");
-                ui.output(task.toString());
-                ui.output("Now you have " + tasks.getLength() + " tasks in the list.");
+                response.append("Noted. I've removed this task:\n");
+                response.append(task.toString());
+                response.append("\nNow you have " + tasks.getLength() + " tasks in the list.");
             } catch (NotNumberException | IndexException | IOException err) {
-                ui.output(err.toString());
+                response.append(err.toString());
             }
         } else if (input.startsWith("find")) {
             String word = Parser.validateNonEmpty(input);
-            ui.output(tasks.toStringConditional(word));
+            response.append(tasks.toStringConditional(word));
         }
         else {
             throw new UnknownCommandException();
         }
+        return response.toString();
     }
 }

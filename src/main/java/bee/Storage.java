@@ -1,4 +1,4 @@
-package Bee;
+package bee;
 
 import java.io.File;
 import java.io.FileNotFoundException;

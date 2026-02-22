@@ -1,4 +1,4 @@
-# Bee.Bee User Guide
+# bee.bee User Guide
 
 // Update the title above to match the actual product name
 

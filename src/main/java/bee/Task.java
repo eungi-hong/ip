@@ -1,4 +1,4 @@
-package Bee;
+package bee;
 
 public abstract class Task {
     protected final String name;

@@ -1,4 +1,4 @@
-package Bee.Exception;
+package bee.Exception;
 
 public class NotDateTimeException extends BeeException{
     public NotDateTimeException() {

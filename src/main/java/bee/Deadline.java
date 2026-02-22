@@ -1,4 +1,4 @@
-package Bee;
+package bee;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
