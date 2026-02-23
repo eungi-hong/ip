@@ -17,7 +17,7 @@ public class Event extends Task {
         this.from = from;
         this.to = to;
     }
-
+    
     public void postpone(LocalDate from, LocalDate to) {
         this.from = from;
         this.to = to;
