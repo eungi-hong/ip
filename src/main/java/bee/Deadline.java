@@ -32,4 +32,8 @@ public class Deadline extends Task {
     public String toStore() {
         return "D / " + super.toStore() + " / " + this.by;
     }
+
+    public void postpone(LocalDate by) {
+        this.by = by;
+    }
 }

@@ -1,6 +1,9 @@
 package bee;
 
 import java.util.ArrayList;
+import java.time.LocalDate;
+
+import bee.Exception.UnknownCommandException;
 
 public class TaskList {
     private ArrayList<Task> list;
@@ -77,4 +80,19 @@ public class TaskList {
         return list.get(ind - 1);
     }
 
+    public void postpone(Integer ind, LocalDate by) throws UnknownCommandException {
+        if (!(list.get(ind - 1) instanceof Deadline)) {
+            throw new UnknownCommandException();
+        }
+        Deadline d = (Deadline) list.get(ind - 1);
+        d.postpone(by);
+    }
+
+    public void postpone(Integer ind, LocalDate from, LocalDate to) throws UnknownCommandException {
+        if (!(list.get(ind - 1) instanceof Event)) {
+            throw new UnknownCommandException();
+        }
+        Event e = (Event) list.get(ind - 1);
+        e.postpone(from, to);
+    }
 }

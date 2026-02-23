@@ -1,6 +1,7 @@
 package bee;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Event extends Task {
     protected LocalDate from;
@@ -17,8 +18,11 @@ public class Event extends Task {
         this.to = to;
     }
 
-    /**
-     * @return the task in a string form suitable for users to view.
+    public void postpone(LocalDate from, LocalDate to) {
+        this.from = from;
+        this.to = to;
+    }
+
     @Override
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");

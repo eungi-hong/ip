@@ -2,6 +2,8 @@ package bee;
 
 import bee.Exception.*;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 
 public class Handler {
@@ -28,7 +30,7 @@ public class Handler {
                 response.append("Nice! I've marked this task as done:\n");
                 response.append(tasks.getTask(ind).toString());
             } catch (NotNumberException | IndexException | IOException err) {
-                response.append(err.toString());
+                response.append(err);
             }
         }
         else if (input.startsWith("unmark")) {
@@ -40,7 +42,7 @@ public class Handler {
                 response.append("Nice! I've marked this task as done:\n");
                 response.append(tasks.getTask(ind).toString());
             } catch (NotNumberException | IndexException | IOException err) {
-                response.append(err.toString());
+                response.append(err);
             }
         }
         else if (input.startsWith("todo")) {
@@ -52,7 +54,7 @@ public class Handler {
                 response.append(tasks.lastTask().toString());
                 response.append("\nNow you have " + tasks.getLength() + " tasks in the list.");
             } catch (EmptyTaskException | IOException err) {
-                response.append(err.toString());
+                response.append(err);
             }
         }
         else if (input.startsWith("deadline")) {
@@ -64,7 +66,7 @@ public class Handler {
                 response.append(tasks.lastTask().toString());
                 response.append("\nNow you have " + tasks.getLength() + " tasks in the list.");
             } catch (EmptyTaskException | IOException err) {
-                response.append(err.toString());
+                response.append(err);
             }
         }
         else if (input.startsWith("event")) {
@@ -76,7 +78,7 @@ public class Handler {
                 response.append(tasks.lastTask().toString());
                 response.append("\nNow you have " + tasks.getLength() + " tasks in the list.");
             } catch (EmptyTaskException | IOException err) {
-                response.append(err.toString());
+                response.append(err);
             }
         }
         else if (input.startsWith("delete")) {
@@ -90,11 +92,44 @@ public class Handler {
                 response.append(task.toString());
                 response.append("\nNow you have " + tasks.getLength() + " tasks in the list.");
             } catch (NotNumberException | IndexException | IOException err) {
-                response.append(err.toString());
+                response.append(err);
             }
-        } else if (input.startsWith("find")) {
+        }
+        else if (input.startsWith("find")) {
             String word = Parser.validateNonEmpty(input);
             response.append(tasks.toStringConditional(word));
+        }
+        else if (input.startsWith("postpone deadline")) {
+            try {
+                Integer ind = Parser.validateIntInRange(input.split(" ")[2], 1, tasks.getLength());
+                assert 1 <= ind && ind <= tasks.getLength() : "index should be within range";
+                LocalDate date = Parser.validateDate(input.split(" ")[3]);
+                tasks.postpone(ind, date);
+
+                Task task = tasks.getTask(ind);
+                storage.updateFile(tasks);
+                response.append("Noted. I've postponed this task:\n");
+                response.append(task.toString());
+
+            } catch (NotNumberException | IndexException | DateTimeParseException | UnknownCommandException | IOException err) {
+                response.append(err);
+            }
+        } else if (input.startsWith("postpone event")) {
+            try {
+                Integer ind = Parser.validateIntInRange(input.split(" ")[2], 1, tasks.getLength());
+                assert 1 <= ind && ind <= tasks.getLength() : "index should be within range";
+                LocalDate to = Parser.validateDate(input.split(" ")[3]);
+                LocalDate from = Parser.validateDate(input.split(" ")[4]);
+                tasks.postpone(ind, to, from);
+
+                Task task = tasks.getTask(ind);
+                storage.updateFile(tasks);
+                response.append("Noted. I've postponed this task:\n");
+                response.append(task.toString());
+
+            } catch (NotNumberException | IndexException | DateTimeParseException | UnknownCommandException | IOException err) {
+                response.append(err);
+            }
         }
         else {
             throw new UnknownCommandException();
