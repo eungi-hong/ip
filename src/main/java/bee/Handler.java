@@ -8,12 +8,11 @@ public class Handler {
     /**
      * Outputs appropriate response to user input.
      * @param input
-     * @param ui
      * @param storage
      * @param tasks
      * @throws BeeException
      */
-    public static String handle(String input, Ui ui, Storage storage, TaskList tasks) throws BeeException {
+    public static String handle(String input, Storage storage, TaskList tasks) throws BeeException {
         StringBuilder response = new StringBuilder();
 
         if (input.equals("list")) {
@@ -23,6 +22,7 @@ public class Handler {
         else if (input.startsWith("mark")) {
             try {
                 Integer ind = Parser.validateIntInRange(input.split(" ")[1], 1, tasks.getLength());
+                assert 0 <= ind && ind < tasks.getLength() : "index should be within range";
                 tasks.doTask(ind);
                 storage.updateFile(tasks);
                 response.append("Nice! I've marked this task as done:\n");
@@ -34,6 +34,7 @@ public class Handler {
         else if (input.startsWith("unmark")) {
             try {
                 Integer ind = Parser.validateIntInRange(input.split(" ")[1], 1, tasks.getLength());
+                assert 0 <= ind && ind < tasks.getLength() : "index should be within range";
                 tasks.undoTask(ind);
                 storage.updateFile(tasks);
                 response.append("Nice! I've marked this task as done:\n");
@@ -81,6 +82,7 @@ public class Handler {
         else if (input.startsWith("delete")) {
             try {
                 Integer ind = Parser.validateIntInRange(input.split(" ")[1], 1, tasks.getLength());
+                assert 0 <= ind && ind < tasks.getLength() : "index should be within range";
                 Task task = tasks.getTask(ind);
                 tasks.deleteTask(ind);
                 storage.updateFile(tasks);

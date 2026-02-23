@@ -32,11 +32,12 @@ public class Storage {
                 Todo t = new Todo(input[2], input[1].equals("1"));
                 list.addTodo(t);
             }
-            if (input[0].equals("D")) {
+            else if (input[0].equals("D")) {
                 Deadline d = new Deadline(input[2], Parser.validateDate(input[3]), input[1].equals("1"));
                 list.addDeadline(d);
             }
-            if (input[0].equals("E")) {
+            else {
+                assert input[0].equals("E"): "data file corrupted!";
                 Event e = new Event(input[2], Parser.validateDate(input[3]), Parser.validateDate(input[4]), input[1].equals("1"));
                 list.addEvent(e);
             }
