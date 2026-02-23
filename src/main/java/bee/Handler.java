@@ -23,6 +23,7 @@ public class Handler {
         else if (input.startsWith("mark")) {
             try {
                 Integer ind = Parser.validateIntInRange(input.split(" ")[1], 1, tasks.getLength());
+                assert 0 <= ind && ind < tasks.getLength() : "index should be within range";
                 tasks.doTask(ind);
                 storage.updateFile(tasks);
                 response.append("Nice! I've marked this task as done:\n");
@@ -34,6 +35,7 @@ public class Handler {
         else if (input.startsWith("unmark")) {
             try {
                 Integer ind = Parser.validateIntInRange(input.split(" ")[1], 1, tasks.getLength());
+                assert 0 <= ind && ind < tasks.getLength() : "index should be within range";
                 tasks.undoTask(ind);
                 storage.updateFile(tasks);
                 response.append("Nice! I've marked this task as done:\n");
@@ -81,6 +83,7 @@ public class Handler {
         else if (input.startsWith("delete")) {
             try {
                 Integer ind = Parser.validateIntInRange(input.split(" ")[1], 1, tasks.getLength());
+                assert 0 <= ind && ind < tasks.getLength() : "index should be within range";
                 Task task = tasks.getTask(ind);
                 tasks.deleteTask(ind);
                 storage.updateFile(tasks);
