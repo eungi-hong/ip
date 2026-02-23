@@ -23,7 +23,7 @@ public class TaskList {
 
     @Override
     public String toString() {
-        StringBuilder str = new StringBuilder("");
+        StringBuilder str = new StringBuilder();
         for (int i = 0; i < list.size(); i++) {
             str.append(i + 1 + ". " + list.get(i).toString() + "\n");
         }
@@ -33,7 +33,7 @@ public class TaskList {
     public String toStringConditional(String word) {
         StringBuilder str = new StringBuilder("");
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).name.contains(word)) {
+            if (list.get(i).containsWord(word)) {
                 str.append(i + 1 + ". " + list.get(i).toString() + "\n");
             }
         }

@@ -8,12 +8,11 @@ public class Handler {
     /**
      * Outputs appropriate response to user input.
      * @param input
-     * @param ui
      * @param storage
      * @param tasks
      * @throws BeeException
      */
-    public static String handle(String input, Ui ui, Storage storage, TaskList tasks) throws BeeException {
+    public static String handle(String input, Storage storage, TaskList tasks) throws BeeException {
         StringBuilder response = new StringBuilder();
 
         if (input.equals("list")) {
