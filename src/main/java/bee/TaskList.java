@@ -45,17 +45,19 @@ public class TaskList {
     }
 
     public void doTask(Integer ind) {
+        assert 1 <= ind && ind <= getLength() : "index should be within range";
         Task task = list.get(ind - 1);
         task.doTask();
     }
 
     public void undoTask(Integer ind) {
+        assert 1 <= ind && ind <= getLength() : "index should be within range";
         list.get(ind - 1).undoTask();
     }
 
     public void deleteTask(Integer ind) {
+        assert 1 <= ind && ind <= getLength() : "index should be within range";
         Task task = list.remove(ind - 1);
-        System.out.println(task);
     }
 
     public String toStore() {
@@ -71,6 +73,7 @@ public class TaskList {
     }
 
     public Task getTask(Integer ind) {
+        assert 1 <= ind && ind <= getLength() : "index should be within range";
         return list.get(ind - 1);
     }
 

@@ -11,6 +11,16 @@ public class Bee {
     private TaskList tasks;
     private String filePath = "src/main/java/Bee/data/tasks.txt";
 
+    public Bee() {
+        ui = new Ui();
+        storage = new Storage(filePath);
+        try {
+            tasks = storage.load();
+        } catch (FileNotFoundException | IndexOutOfBoundsException | DateTimeParseException e) {
+            ui.output(e.getMessage());
+            tasks = new TaskList();
+        }
+    }
     public static void main(String[] args) {
         System.out.println("Hello!");
     }
@@ -25,17 +35,6 @@ public class Bee {
             } catch (BeeException e) {
                 return (e.getMessage());
             }
-        }
-    }
-
-    public Bee() {
-        ui = new Ui();
-        storage = new Storage(filePath);
-        try {
-            tasks = storage.load();
-        } catch (FileNotFoundException | IndexOutOfBoundsException | DateTimeParseException e) {
-            ui.output(e.getMessage());
-            tasks = new TaskList();
         }
     }
 }
