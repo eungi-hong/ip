@@ -18,6 +18,7 @@ public class Bee {
             assert false : "data file corrupted or does not exist";
         }
     }
+
     public static void main(String[] args) {
         System.out.println("Hello!");
     }

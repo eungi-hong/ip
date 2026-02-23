@@ -4,6 +4,11 @@ public abstract class Task {
     protected final String name;
     protected boolean isDone;
 
+    /**
+     * Represents a task, implemented by subclasses like Todo, Deadline, Event
+     * @param name
+     * @param isDone
+     */
     Task(String name, boolean isDone) {
         this.name = name;
         this.isDone = isDone;
