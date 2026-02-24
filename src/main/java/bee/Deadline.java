@@ -33,6 +33,10 @@ public class Deadline extends Task {
         return "D / " + super.toStore() + " / " + this.by;
     }
 
+    /**
+     * Postpone the deadline to a later date.
+     * @param by
+     */
     public void postpone(LocalDate by) {
         this.by = by;
     }

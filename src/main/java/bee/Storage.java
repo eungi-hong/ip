@@ -20,6 +20,14 @@ public class Storage {
     public Storage() {
         path = Path.of("data", "tasks.txt");
     }
+
+    /**
+     *
+     * @return tasklist loaded with descriptions in hard disk.
+     * @throws IOException
+     * @throws IndexOutOfBoundsException
+     * @throws DateTimeParseException
+     */
     public TaskList load() throws IndexOutOfBoundsException, DateTimeParseException, IOException {
         if (!Files.exists(path)) {
             Files.createDirectories(path.getParent());

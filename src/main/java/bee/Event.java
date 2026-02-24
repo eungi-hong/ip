@@ -17,12 +17,20 @@ public class Event extends Task {
         this.from = from;
         this.to = to;
     }
-    
+
+        /**
+        * Postpone the event to a later date.
+        * @param from
+        * @param to
+        */
     public void postpone(LocalDate from, LocalDate to) {
         this.from = from;
         this.to = to;
     }
 
+    /**
+     * @return task in a string form suitable for users to view.
+     */
     @Override
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
