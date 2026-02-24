@@ -1,6 +1,4 @@
-T / 1 / boo
-T / 1 / bong
-T / 1 / bong
-D / 0 / bing / 2024-02-02
-T / 0 / bo
-E / 0 / b / 2024-04-04 / 2024-05-09
+T / 0 / cheer up charlie brown
+T / 0 / practice baseball
+D / 0 / give woodstock food / 2024-02-02
+E / 0 / afternoon nap / 2024-04-04 / 2024-05-09

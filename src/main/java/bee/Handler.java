@@ -46,7 +46,7 @@ public class Handler {
                 assert 0 <= ind && ind < tasks.getLength() : "index should be within range";
                 tasks.undoTask(ind);
                 storage.updateFile(tasks);
-                response.append("Nice! I've marked this task as done:\n");
+                response.append("Oops! I've marked this task as not done yet:\n");
                 response.append(tasks.getTask(ind).toString());
             } catch (NotNumberException | IndexException | IOException err) {
                 response.append(err);
