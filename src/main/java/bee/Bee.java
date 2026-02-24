@@ -1,21 +1,21 @@
 package bee;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.format.DateTimeParseException;
 
 import bee.Exception.BeeException;
 
 public class Bee {
     private Storage storage;
-    private TaskList tasks;
-    private String filePath = "src/main/java/Bee/data/tasks.txt";
+    private TaskList tasks = new TaskList();
 
     public Bee() {
-        storage = new Storage(filePath);
+        storage = new Storage();
         try {
             tasks = storage.load();
-        } catch (FileNotFoundException | IndexOutOfBoundsException | DateTimeParseException e) {
-            assert false : "data file corrupted or does not exist";
+        } catch (IndexOutOfBoundsException | DateTimeParseException | IOException e) {
+            assert false : "file is missing or corrupted!";
         }
     }
 

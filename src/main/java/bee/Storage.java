@@ -1,33 +1,35 @@
 package bee;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import java.time.format.DateTimeParseException;
-import java.util.Scanner;
+import java.util.stream.Stream;
+
 
 public class Storage {
-    String filePath;
-
-    Storage(String filePath) {
-        this.filePath = filePath;
-    }
-
+    private Path path;
     /**
      *
      * @return tasklist loaded with descriptions in hard disk.
-     * @throws FileNotFoundException
+     * @throws IOException
      * @throws IndexOutOfBoundsException
      * @throws DateTimeParseException
      */
-    public TaskList load() throws FileNotFoundException, IndexOutOfBoundsException, DateTimeParseException {
+    public Storage() {
+        path = Path.of("data", "tasks.txt");
+    }
+    public TaskList load() throws IndexOutOfBoundsException, DateTimeParseException, IOException {
+        if (!Files.exists(path)) {
+            Files.createDirectories(path.getParent());
+            Files.createFile(path);
+        }
+
         TaskList list = new TaskList();
-        File f = new File(filePath);
-        Scanner s = new Scanner(f);
-;
-        while (s.hasNext()) {
-            String input[] = s.nextLine().split(" / ");
+        Stream<String> s = Files.lines(path);
+        s.forEach(line -> {
+            String input[] = line.split(" / ");
             if (input[0].equals("T")) {
                 Todo t = new Todo(input[2], input[1].equals("1"));
                 list.addTodo(t);
@@ -37,11 +39,10 @@ public class Storage {
                 list.addDeadline(d);
             }
             else {
-                assert input[0].equals("E"): "data file corrupted!";
                 Event e = new Event(input[2], Parser.validateDate(input[3]), Parser.validateDate(input[4]), input[1].equals("1"));
                 list.addEvent(e);
             }
-        }
+        });
         return list;
     }
 
@@ -51,8 +52,6 @@ public class Storage {
      * @throws IOException
      */
     public void updateFile(TaskList list) throws IOException {
-        FileWriter fw = new FileWriter(filePath);
-        fw.write(list.toStore());
-        fw.close();
+        Files.write(path, list.toStore().getBytes());
     }
 }
