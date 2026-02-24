@@ -1,11 +1,18 @@
 package bee;
 
-import bee.Exception.*;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
+import bee.Exception.BeeException;
+import bee.Exception.EmptyTaskException;
+import bee.Exception.IndexException;
+import bee.Exception.NotNumberException;
+import bee.Exception.UnknownCommandException;
 
+/**
+ * Handles user input and executes corresponding commands.
+ */
 public class Handler {
     /**
      * Outputs appropriate response to user input.
@@ -111,7 +118,9 @@ public class Handler {
                 response.append("Noted. I've postponed this task:\n");
                 response.append(task.toString());
 
-            } catch (NotNumberException | IndexException | DateTimeParseException | UnknownCommandException | IOException err) {
+            } catch (NotNumberException | IndexException | DateTimeParseException err) {
+                response.append(err);
+            } catch (UnknownCommandException | IOException err) {
                 response.append(err);
             }
         } else if (input.startsWith("postpone event")) {
@@ -127,7 +136,9 @@ public class Handler {
                 response.append("Noted. I've postponed this task:\n");
                 response.append(task.toString());
 
-            } catch (NotNumberException | IndexException | DateTimeParseException | UnknownCommandException | IOException err) {
+            } catch (NotNumberException | IndexException | DateTimeParseException err) {
+                response.append(err);
+            } catch (UnknownCommandException | IOException err) {
                 response.append(err);
             }
         }
